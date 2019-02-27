@@ -1,5 +1,6 @@
 import React from 'react'
-
+import {connect} from 'react-redux'
+import {addGun,removeGun,addGunAsysc} from './index.redux'
 // import {Button,List} from 'antd-mobile'
 // // 1、react组件的练习
 // class App extends React.Component{
@@ -70,20 +71,19 @@ import React from 'react'
 // 2、redux的练习
 class App extends React.Component{
   render(){
-    const store = this.props.store
-    const num = store.getState()
-    const addGun = this.props.addGun
-    const removeGun = this.props.removeGun
-    const addGunAsysc = this.props.addGunAsysc
     return (
       <div>
-        <h1>现在有机枪{num}把</h1>
-        <button onClick={() => store.dispatch(addGun())}>申请武器</button>
-        <button onClick={() => store.dispatch(removeGun())}>上交武器</button>
-        <button onClick={() => store.dispatch(addGunAsysc())}>拖两天在给</button>
+        <h1>现在有机枪{this.props.num}把</h1>
+        <button onClick={this.props.addGun}>申请武器</button>
+        <button onClick={this.props.removeGun}>上交武器</button>
+        <button onClick={this.props.addGunAsysc}>拖两天在给</button>
       </div>
     )
   }
 }
-
+const mapStatetoProps = (state)=>{
+  return {num: state}
+}
+const actionCreators = {addGun,removeGun,addGunAsysc} 
+App = connect(mapStatetoProps,actionCreators)(App)
 export default App
